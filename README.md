@@ -103,8 +103,8 @@ d
                 $ABF                  d$               T->FB
                 $ABd                  d$                F->d
                  $AB                   $              匹配 d
-                 $AB                   $                B->@
-                  $A                   $                A->@
+                  $A                   $                B->@
+                   $                   $                A->@
                    $                   $                接受
 分析成功！
 请输入一个句子：（中间不含空格，回车结束, 退出请输入 quit）
@@ -115,14 +115,14 @@ d+d
                 $ABF                d+d$               T->FB
                 $ABd                d+d$                F->d
                  $AB                 +d$              匹配 d
-                 $AB                 +d$                B->@
+                  $A                 +d$                B->@
                 $AT+                 +d$              A->+TA
                  $AT                  d$              匹配 +
                 $ABF                  d$               T->FB
                 $ABd                  d$                F->d
                  $AB                   $              匹配 d
-                 $AB                   $                B->@
-                  $A                   $                A->@
+                  $A                   $                B->@
+                   $                   $                A->@
                    $                   $                接受
 分析成功！
 请输入一个句子：（中间不含空格，回车结束, 退出请输入 quit）
@@ -133,7 +133,7 @@ d+d*d
                 $ABF              d+d*d$               T->FB
                 $ABd              d+d*d$                F->d
                  $AB               +d*d$              匹配 d
-                 $AB               +d*d$                B->@
+                  $A               +d*d$                B->@
                 $AT+               +d*d$              A->+TA
                  $AT                d*d$              匹配 +
                 $ABF                d*d$               T->FB
@@ -143,8 +143,8 @@ d+d*d
                 $ABF                  d$              匹配 *
                 $ABd                  d$                F->d
                  $AB                   $              匹配 d
-                 $AB                   $                B->@
-                  $A                   $                A->@
+                  $A                   $                B->@
+                   $                   $                A->@
                    $                   $                接受
 分析成功！
 请输入一个句子：（中间不含空格，回车结束, 退出请输入 quit）
@@ -167,8 +167,8 @@ d*d*d*d
                 $ABF                  d$              匹配 *
                 $ABd                  d$                F->d
                  $AB                   $              匹配 d
-                 $AB                   $                B->@
-                  $A                   $                A->@
+                  $A                   $                B->@
+                   $                   $                A->@
                    $                   $                接受
 分析成功！
 请输入一个句子：（中间不含空格，回车结束, 退出请输入 quit）
@@ -183,21 +183,21 @@ d*d*d*d
              $AB)ABF             d+d)*d$               T->FB
              $AB)ABd             d+d)*d$                F->d
               $AB)AB              +d)*d$              匹配 d
-              $AB)AB              +d)*d$                B->@
+               $AB)A              +d)*d$                B->@
              $AB)AT+              +d)*d$              A->+TA
               $AB)AT               d)*d$              匹配 +
              $AB)ABF               d)*d$               T->FB
              $AB)ABd               d)*d$                F->d
               $AB)AB                )*d$              匹配 d
-              $AB)AB                )*d$                B->@
-               $AB)A                )*d$                A->@
+               $AB)A                )*d$                B->@
+                $AB)                )*d$                A->@
                  $AB                 *d$              匹配 )
                $ABF*                 *d$              B->*FB
                 $ABF                  d$              匹配 *
                 $ABd                  d$                F->d
                  $AB                   $              匹配 d
-                 $AB                   $                B->@
-                  $A                   $                A->@
+                  $A                   $                B->@
+                   $                   $                A->@
                    $                   $                接受
 分析成功！
 请输入一个句子：（中间不含空格，回车结束, 退出请输入 quit）
