@@ -1,94 +1,96 @@
 /*
 	@author w
 	@date 2019.6.17
-	·ÖÎöº¯Êı£¬ÓÃÀ´¼ì²â·ÖÎö±í ºÍ ÑéÖ¤ÎÄ·¨¾ä×Ó
+	åˆ†æå‡½æ•°ï¼Œç”¨æ¥æ£€æµ‹åˆ†æè¡¨ å’Œ éªŒè¯æ–‡æ³•å¥å­
+	@date 2019.6.19
+	ä¿®æ­£æ‰“å°bug
 */
 #include "common_header.h"
 using namespace std;
 
-//ÎÄ·¨Êı×é
+//æ–‡æ³•æ•°ç»„
 extern string grammar[maxnum];
-//¶şÎ¬Êı×é£¬Ô¤²â·ÖÎö±í£¬´æ·Å²úÉúÊ½Êı×éÏÂ±ê£¬Ã»ÓĞµÄµØ·½ÉèÖÃÎª -1
+//äºŒç»´æ•°ç»„ï¼Œé¢„æµ‹åˆ†æè¡¨ï¼Œå­˜æ”¾äº§ç”Ÿå¼æ•°ç»„ä¸‹æ ‡ï¼Œæ²¡æœ‰çš„åœ°æ–¹è®¾ç½®ä¸º -1
 extern int table[maxnum][maxnum];
-//¿ªÊ¼·ûºÅ
+//å¼€å§‹ç¬¦å·
 extern char start_char;
-//´òÓ¡µ±Ç°×´Ì¬
+//æ‰“å°å½“å‰çŠ¶æ€
 void printCurrentStatus(const char* s1, const char* s2, const string& s3) {
 	cout << setw(Table_width) << s1 << setw(Table_width) << s2 << setw(Table_width) << s3 << endl;
 }
-// ·ÖÎöº¯Êı
-// Èç¹û³É¹¦·ÖÎö£¬Êä³ö ·ÖÎö¶¯×÷
+// åˆ†æå‡½æ•°
+// å¦‚æœæˆåŠŸåˆ†æï¼Œè¾“å‡º åˆ†æåŠ¨ä½œ
 void analyze(const char* sentence, int len) {
 	char str[300];
 	strcpy(str, sentence);
 	if (len == -1)
 		len = strlen(str);
-	str[len++] = '$'; // ÔÚÄ©Î²¼ÓÈë '$'
+	str[len++] = '$'; // åœ¨æœ«å°¾åŠ å…¥ '$'
 	str[len] = 0;
-	char stk[200] = {0}; //Êı×éÄ£ÄâÕ»
+	char stk[200]; //æ•°ç»„æ¨¡æ‹Ÿæ ˆ
 	int pos = 0;
-	// ÏòÕ»ÖĞ¼ÓÈë'$'ºÍ¿ªÊ¼·ûºÅ
+	// å‘æ ˆä¸­åŠ å…¥'$'å’Œå¼€å§‹ç¬¦å·
 	stk[pos++] = '$';
 	stk[pos++] = start_char;
-	cout << setw(Table_width) << "Õ»" << setw(Table_width) << "ÊäÈë" << setw(Table_width) << "¶¯×÷" << endl;
-	//´òÓ¡ µ±Ç°Õ»ÖĞÄÚÈİ + Ê£ÓàÊäÈë + ·ÖÎö¶¯×÷
-	printCurrentStatus(stk, str, string("³õÊ¼"));
+	cout << setw(Table_width) << "æ ˆ" << setw(Table_width) << "è¾“å…¥" << setw(Table_width) << "åŠ¨ä½œ" << endl;
+	//æ‰“å° å½“å‰æ ˆä¸­å†…å®¹ + å‰©ä½™è¾“å…¥ + åˆ†æåŠ¨ä½œ
+	stk[pos] = 0;
+	printCurrentStatus(stk, str, string("åˆå§‹"));
 	for (int i = 0;i < len;) {
-		stk[pos] = 0;
 		char top = stk[--pos];
+		stk[pos] = 0;
 		if (top == '$') {
 			if (str[i] == '$') {
-				printCurrentStatus(stk, str + i, string("½ÓÊÜ"));
-				cout << "·ÖÎö³É¹¦£¡" << endl;
+				printCurrentStatus("$", "$", string("æ¥å—"));
+				cout << "åˆ†ææˆåŠŸï¼" << endl;
 				break;
 			}
 			else {
-				//´òÓ¡ µ±Ç°Õ»ÖĞÄÚÈİ + Ê£ÓàÊäÈë + ·ÖÎö¶¯×÷
-				printCurrentStatus(stk, str + i, string("´íÎó£¡"));
-				cerr << "·ÖÎöÕ»Õ»¶¥Îª'$'£¬µ«ÊÇÊäÈëÉĞÎ´½áÊø¡£ÕıÔÚÍË³ö..." << endl;
-				exit(EXIT_FAILURE);
+				//æ‰“å° å½“å‰æ ˆä¸­å†…å®¹ + å‰©ä½™è¾“å…¥ + åˆ†æåŠ¨ä½œ
+				printCurrentStatus(stk, str + i, string("é”™è¯¯ï¼"));
+				cerr << "åˆ†ææ ˆæ ˆé¡¶ä¸º'$'ï¼Œä½†æ˜¯è¾“å…¥å°šæœªç»“æŸã€‚" << endl;
+				return;
 			}
 		}
-		// Èç¹ûÕ»¶¥²»ÊÇ '$'
+		// å¦‚æœæ ˆé¡¶ä¸æ˜¯ '$'
 		int current_type = typeOf(top);
 		if (current_type == Terminator) {
 			if (top == str[i]) {
-				i++; //ÊäÈë×Ö·ûÌáÈ¡×ß
-				stk[pos] = 0;
-				string res("Æ¥Åä ");
-				//´òÓ¡ µ±Ç°Õ»ÖĞÄÚÈİ + Ê£ÓàÊäÈë + ·ÖÎö¶¯×÷
+				i++; //è¾“å…¥å­—ç¬¦æå–èµ°
+				string res("åŒ¹é… ");
+				//æ‰“å° å½“å‰æ ˆä¸­å†…å®¹ + å‰©ä½™è¾“å…¥ + åˆ†æåŠ¨ä½œ
 				printCurrentStatus(stk, str + i, res + top);
 			}
 			else {
-				//´òÓ¡ µ±Ç°Õ»ÖĞÄÚÈİ + Ê£ÓàÊäÈë + ·ÖÎö¶¯×÷
-				printCurrentStatus(stk, str + i, string("´íÎó£¡"));
-				cerr << "·ÖÎöÕ»Õ»¶¥ÎªÖÕ½á·û '" << top << "'£¬µ«ÊÇÊäÈë·ûºÅÎª '" << str[i] << "'¡£ÕıÔÚÍË³ö..." << endl;
-				exit(EXIT_FAILURE);
+				//æ‰“å° å½“å‰æ ˆä¸­å†…å®¹ + å‰©ä½™è¾“å…¥ + åˆ†æåŠ¨ä½œ
+				printCurrentStatus(stk, str + i, string("é”™è¯¯ï¼"));
+				cerr << "åˆ†ææ ˆæ ˆé¡¶ä¸ºç»ˆç»“ç¬¦ '" << top << "'ï¼Œä½†æ˜¯è¾“å…¥ç¬¦å·ä¸º '" << str[i] << "'" << endl;
+				return;
 			}
 		}
 		else if (current_type == NonTerminator) {
 			int g_index = table[indexOfNonT(top)][indexOfTerm(str[i])];
 			if (g_index != -1) {
-				if (grammar[g_index][3] != '@') { // Èç¹ûÓÒ±ß ÊÇ @£¬ÄÇÃ´²»ÏòÕ»ÖĞÔö¼Ó¶«Î÷
-					// ½«²úÉúÊ½ÖĞÓÒ²¿ÄÚÈİ µ¹Ğò ÈëÕ»
+				if (grammar[g_index][3] != '@') { // å¦‚æœå³è¾¹ æ˜¯ @ï¼Œé‚£ä¹ˆä¸å‘æ ˆä¸­å¢åŠ ä¸œè¥¿
+					// å°†äº§ç”Ÿå¼ä¸­å³éƒ¨å†…å®¹ å€’åº å…¥æ ˆ
 					for (int i = grammar[g_index].size() - 1; i >= 3;i--) {
 						stk[pos++] = grammar[g_index][i];
 					}
+					stk[pos] = 0;
 				}
-				//´òÓ¡ µ±Ç°Õ»ÖĞÄÚÈİ + Ê£ÓàÊäÈë + ·ÖÎö¶¯×÷
+				//æ‰“å° å½“å‰æ ˆä¸­å†…å®¹ + å‰©ä½™è¾“å…¥ + åˆ†æåŠ¨ä½œ
 				printCurrentStatus(stk, str + i, grammar[g_index]);
-
 			}
 			else {
-				//´òÓ¡ µ±Ç°Õ»ÖĞÄÚÈİ + Ê£ÓàÊäÈë + ·ÖÎö¶¯×÷
-				printCurrentStatus(stk, str + i, string("´íÎó£¡"));
-				cerr << "·ÖÎö±í table[" << top << "][" << str[i] << "] ÏîÎª¿Õ¡£ÕıÔÚÍË³ö..." << endl;
-				exit(EXIT_FAILURE);
+				//æ‰“å° å½“å‰æ ˆä¸­å†…å®¹ + å‰©ä½™è¾“å…¥ + åˆ†æåŠ¨ä½œ
+				printCurrentStatus(stk, str + i, string("é”™è¯¯ï¼"));
+				cerr << "åˆ†æè¡¨ table[" << top << "][" << str[i] << "] é¡¹ä¸ºç©ºã€‚" << endl;
+				return;
 			}
 		}
 		else {
-			cerr << "½âÎö´íÎó£¡ÕıÔÚÖĞÖ¹³ÌĞò..." << endl;
-			exit(EXIT_FAILURE);
+			cerr << "è§£æé”™è¯¯ï¼" << endl;
+			return;
 		}
 	}
 
