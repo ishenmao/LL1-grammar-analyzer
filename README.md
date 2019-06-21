@@ -17,8 +17,9 @@
 ## 5、特殊说明
 - 使用`@`符号作为空串符号，`$`符号作为句子末尾符号
 - 开始文法符号设为输入文法中的第一个产生式的第一个字母
-## 6、输入文法举例
+## 6、LL(1)文法测试用例
 ```cpp
+1、声明语句的简化文法：
 D->TL
 T->i
 T->r
@@ -26,13 +27,13 @@ L->dR
 R->,dR
 R->@
 
-本文法合法句子示例：
+此文法合法串举例：
 id
 id,d,d
 rd
 rd,d
-```
-```cpp
+
+2、含加法、乘法的表达式的简化文法
 E->TA
 A->+TA
 A->@
@@ -42,12 +43,55 @@ B->@
 F->(E)
 F->d
 
-本文法合法句子示例：
+此文法合法串举例：
 d
 d+d
 d+d*d
-d*d*d*d
-(d+d)*d
+(d+d)*(d+d)
+(((d)))
+
+3、识别a、b个数相等的字符串
+S->aBS
+S->bAS
+S->@
+A->a
+A->bAA
+B->b
+B->aBB
+
+此文法合法串举例：
+$
+ba
+ab
+abab
+baab
+abaababbba
+bbbbbaaaaa
+
+4、识别中间字母为c，两边为对称的ab串
+S->aSa
+S->bSb
+S->c
+
+此文法合法串举例：
+c
+aca
+bcb
+abbbcbbba
+aababbcbbabaa
+
+5、识别两端为个数相等的a、d，中间为个数相等的b、c，且a，b，c，d的个数均大于等于1的字符串
+S->aB
+B->Sd
+B->Ad
+A->bC
+C->Ac
+C->c
+
+此文法合法串举例：
+abcd
+aabcdd
+aabbbbccccdd
 ```
 ## 7、测试（使用上述第二个文法）
 ```cpp
